@@ -22,11 +22,14 @@ def run(update: Update, context: CallbackContext) -> None:
     }
 
     response = session.post(os.environ["JSON_RPC"], json=payload)
-    if not response.ok:
+    response.raise_for_status()
+    result = response.json().get("result")
+
+    if not result:
         with open("donkey.jpeg", "rb") as f:
             update.message.reply_photo(photo=f)
     else:
-        update.message.reply_text(response.json()["result"])
+        update.message.reply_text(result)
 
 
 bot = Bot(token=os.environ["TOKEN"])
