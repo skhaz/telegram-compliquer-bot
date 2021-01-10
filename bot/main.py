@@ -17,7 +17,7 @@ def run(update: Update, context: CallbackContext) -> None:
         "jsonrpc": "2.0",
         "method": "execute",
         "params": {
-            "source": update.message.text.strip("/run")
+            "source": update.message.text.strip("/run").strip("```")
         }
     }
 
