@@ -31,7 +31,8 @@ def run(update: Update, context: CallbackContext) -> None:
     result = response.json().get("result")
 
     if result:
-        update.message.reply_text(result)
+        message = update.message.reply_to_message or update.message
+        message.reply_text(result)
 
 
 bot = Bot(token=os.environ["TOKEN"])
