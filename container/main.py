@@ -14,7 +14,7 @@ def execute(source: str) -> dict:
     subprocess.run(["g++", "-march=native", "-O2", "main.cpp"])
     result = subprocess.run("./a.out", capture_output=True, timeout=10)
     limit = 300
-    return result.stdout[:limit].decode('utf-8')
+    return f"```{result.stdout[:limit].decode('utf-8')}```"
 
 
 @Request.application
