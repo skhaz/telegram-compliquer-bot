@@ -26,7 +26,7 @@ def run(update: Update, context: CallbackContext) -> None:
         "params": {"source": text},
     }
 
-    response = session.post(os.environ["JSON_RPC"], json=payload)
+    response = session.post(os.environ["JSON_RPC"], json=payload, timeout=60)
     response.raise_for_status()
     result = response.json().get("result")
 
