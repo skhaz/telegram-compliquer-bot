@@ -12,7 +12,7 @@ def execute(source: str) -> dict:
     with open("main.cpp", "w") as f:
         f.write(source)
     subprocess.run(["g++", "-march=native", "-O2", "main.cpp"])
-    result = subprocess.run("./a.out", capture_output=True, timeout=60)
+    result = subprocess.run("./a.out", capture_output=True, timeout=10)
     limit = 1000
     return result.stdout[:limit].decode('utf-8').strip()
 

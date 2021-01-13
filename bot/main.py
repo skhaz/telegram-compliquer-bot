@@ -4,6 +4,9 @@ import functools
 
 import requests
 
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
 from flask import Flask, request
 from werkzeug.wrappers import Response
 
@@ -16,7 +19,11 @@ app = Flask(__name__)
 class JSONRPC:
     def __init__(self, url):
         self.url = url
+
+        retry = Retry(total=3)
+        adapter = HTTPAdapter(max_retries=retry)
         self.session = requests.Session()
+        self.session.mount("https://", adapter)
 
     def _make_payload(self, method, params):
         return {"id": 0, "jsonrpc": "2.0", "method": method, "params": params}
@@ -47,6 +54,8 @@ def run(update: Update, context: CallbackContext) -> None:
         return
 
     user = message.from_user or message.chat_id
+
+    print(user, text)
 
     result = execute(source=text).get("result")
 
