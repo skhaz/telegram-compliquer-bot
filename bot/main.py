@@ -20,7 +20,7 @@ class JSONRPC:
     def __init__(self, url):
         self.url = url
 
-        retry = Retry(total=3)
+        retry = Retry(total=3, backoff_factor=1)
         adapter = HTTPAdapter(max_retries=retry)
         self.session = requests.Session()
         self.session.mount("https://", adapter)
@@ -32,7 +32,7 @@ class JSONRPC:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             payload = self._make_payload(func.__name__, kwargs.copy())
-            response = self.session.post(self.url, json=payload, timeout=60)
+            response = self.session.post(self.url, json=payload, timeout=30)
             response.raise_for_status()
             return response.json()
 
