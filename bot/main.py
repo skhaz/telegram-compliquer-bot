@@ -50,8 +50,6 @@ def run(update: Update, context: CallbackContext) -> None:
     if not text:
         return
 
-    user = message.from_user or message.chat_id
-
     result = execute(source=text).get("result")
 
     if result:
