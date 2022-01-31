@@ -17,12 +17,11 @@ def execute(source: str) -> dict:
     subprocess.run(["g++", *flags, filename])
     result = subprocess.run("./a.out", capture_output=True, timeout=10)
     limit = 1000
-    return result.stdout[:limit].decode('utf-8').strip()
+    return result.stdout[:limit].decode("utf-8").strip()
 
 
 @Request.application
 def application(request: Request) -> Response:
-    response = JSONRPCResponseManager.handle(
-        request.data, dispatcher)
+    response = JSONRPCResponseManager.handle(request.data, dispatcher)
 
     return Response(response.json, mimetype="application/json")

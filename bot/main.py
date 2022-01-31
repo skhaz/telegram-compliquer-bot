@@ -1,17 +1,14 @@
-import os
-import http
 import functools
+import http
+import os
 
 import requests
-
+from flask import Flask, request
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
-from flask import Flask, request
-from werkzeug.wrappers import Response
-
 from telegram import Bot, Update
-from telegram.ext import Dispatcher, CommandHandler, CallbackContext
+from telegram.ext import CallbackContext, CommandHandler, Dispatcher
+from werkzeug.wrappers import Response
 
 app = Flask(__name__)
 
@@ -72,7 +69,6 @@ dispatcher.add_handler(CommandHandler("run", run))
 
 @app.route("/", methods=["POST"])
 def index() -> Response:
-    dispatcher.process_update(
-        Update.de_json(request.get_json(force=True), bot))
+    dispatcher.process_update(Update.de_json(request.get_json(force=True), bot))
 
     return "", http.HTTPStatus.NO_CONTENT
