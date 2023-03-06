@@ -29,6 +29,4 @@ jobs:
             --source $(pwd) \
             --region us-central1 \
             --allow-unauthenticated \
-            --platform managed \
-            --set-env-vars TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} \
-            --set-env-vars JSON_RPC=$(gcloud run services describe container --format 'value(status.url)') 
+            --platform managed
