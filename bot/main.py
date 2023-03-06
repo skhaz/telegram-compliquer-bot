@@ -59,7 +59,7 @@ def run(update: Update, context: CallbackContext) -> None:
         message.reply_text(result)
 
 
-bot = Bot(token=os.environ["TOKEN"])
+bot = Bot(token=os.environ["TELEGRAM_TOKEN"])
 
 dispatcher = Dispatcher(bot=bot, update_queue=None, workers=0)
 dispatcher.add_handler(CommandHandler("run", run))
