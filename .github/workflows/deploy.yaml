@@ -22,11 +22,21 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Deploy to Cloud Run
+      - name: Deploy Bot to Cloud Run
+        working-directory: bot
         run: |
-          gcloud run deploy ${{ secrets.SERVICE_NAME }} \
+          gcloud run deploy ${{ secrets.SERVICE_NAME_BOT }} \
             --source $(pwd) \
             --region us-central1 \
             --allow-unauthenticated \
             --platform managed \
             --set-env-vars TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+
+      - name: Deploy Container to Cloud Run
+        working-directory: container
+        run: |
+          gcloud run deploy ${{ secrets.SERVICE_NAME_CONTAINER }} \
+            --source $(pwd) \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --platform managed
