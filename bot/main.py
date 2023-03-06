@@ -65,7 +65,7 @@ dispatcher = Dispatcher(bot=bot, update_queue=None, workers=0)
 dispatcher.add_handler(CommandHandler("run", run))
 
 
-@app.route("/", methods=["POST"])
+@app.post("/")
 def index() -> Response:
     dispatcher.process_update(Update.de_json(request.get_json(force=True), bot))
 
