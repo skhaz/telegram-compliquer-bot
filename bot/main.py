@@ -48,7 +48,9 @@ def run(update: Update, context: CallbackContext) -> None:
     message = update.message
     text = message.text.strip("/run")
     if not text:
-        return
+        text = message.reply_to_message.text
+        if not text:
+            return
 
     result = execute(source=text).get("result")
 
