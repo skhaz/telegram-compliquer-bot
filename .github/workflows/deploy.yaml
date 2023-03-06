@@ -30,7 +30,8 @@ jobs:
             --region us-central1 \
             --allow-unauthenticated \
             --platform managed \
-            --set-env-vars TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+            --set-env-vars TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} \
+            --set-env-vars JSON_RPC=$(gcloud run services describe ${{ secrets.SERVICE_NAME_CONTAINER }} --format 'value(status.url)') 
 
       - name: Deploy Container to Cloud Run
         working-directory: container
